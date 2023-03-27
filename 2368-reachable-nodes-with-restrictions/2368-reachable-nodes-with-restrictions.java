@@ -1,40 +1,34 @@
 class Solution {
-    
-    private int ans = 0;
-    
-    private void dfs(int currNode, Map<Integer, List<Integer>> neighbors, Set<Integer> seen) {
-        
-        
-        ans++;
-        seen.add(currNode);
-        
-      
-        for (int nextNode : neighbors.get(currNode)) {
-            if (!seen.contains(nextNode)) {
-                dfs(nextNode, neighbors, seen);
-            }
-        }    
+  public int reachableNodes(int n, int[][] edges, int[] restricted) {
+    List<Integer>[] tree = new List[n];
+    boolean[] seen = new boolean[n];
+
+    for (int i = 0; i < n; ++i)
+      tree[i] = new ArrayList<>();
+
+    for (int[] edge : edges) {
+      final int u = edge[0];
+      final int v = edge[1];
+      tree[u].add(v);
+      tree[v].add(u);
     }
-    
-    public int reachableNodes(int n, int[][] edges, int[] restricted) {
-        
-        
-        Map<Integer, List<Integer>> neighbors = new HashMap<>();
-        
-        for (int[] edge : edges) {
-            int a = edge[0], b = edge[1];
-            
-            neighbors.computeIfAbsent(a, value -> new ArrayList<Integer>()).add(b);
-            neighbors.computeIfAbsent(b, value -> new ArrayList<Integer>()).add(a);
-        }
-        
-        
-        Set<Integer> seen = new HashSet<>();
-        for (int node : restricted) {
-            seen.add(node);
-        }
-        
-        dfs(0, neighbors, seen);
-        return ans;
-    }
+
+    for (final int r : restricted)
+      seen[r] = true;
+
+    return dfs(tree, 0, seen);
+  }
+
+  private int dfs(List<Integer>[] tree, int u, boolean[] seen) {
+    if (seen[u])
+      return 0;
+
+    seen[u] = true;
+    int ans = 1;
+
+    for (final int v : tree[u])
+      ans += dfs(tree, v, seen);
+
+    return ans;
+  }
 }
