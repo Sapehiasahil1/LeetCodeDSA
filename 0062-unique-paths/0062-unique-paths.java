@@ -2,12 +2,9 @@ class Solution {
     public int uniquePaths(int m, int n) {
         
         int mat[][] = new int [m][n];
-        
-        int count =0;
-        
-        count += fun(mat, 0,0,m,n);
-        
-        return count;
+           
+        return fun(mat, 0,0,m,n);
+       
     }
     
     public int fun(int mat[][], int i, int j,  int m, int n) {
