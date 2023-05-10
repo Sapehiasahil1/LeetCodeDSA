@@ -13,29 +13,58 @@
  *     }
  * }
  */
-class Solution {
+// class Solution {
     
-    int maxSum;
+//     int maxSum;
+//     public int maxPathSum(TreeNode root) {
+        
+//         maxSum = Integer.MIN_VALUE;
+//         fun(root);
+        
+//         return maxSum;
+        
+//     }
+    
+//     public int fun(TreeNode root){
+        
+//         if(root == null){
+//             return 0;
+//         }
+        
+//         int leftSide = Math.max(fun(root.left),0);
+//         int rightSide = Math.max(fun(root.right),0);
+        
+//         int sum = root.val + leftSide + rightSide;
+//         maxSum = Math.max(maxSum, sum);
+        
+//         return root.val + Math.max(leftSide,rightSide);
+//     }
+// }
+
+class Solution {
+     int maxSum;
+    
     public int maxPathSum(TreeNode root) {
         
-        maxSum = Integer.MIN_VALUE;
-        fun(root);
-        
+       maxSum = Integer.MIN_VALUE;
+        helper(root);
         return maxSum;
-        
     }
     
-    public int fun(TreeNode root){
+    public int helper(TreeNode root){
         
         if(root == null){
             return 0;
         }
         
-        int leftSide = Math.max(fun(root.left),0);
-        int rightSide = Math.max(fun(root.right),0);
+        int leftSide = Math.max(helper(root.left),0);
+        int rightSide = Math.max(helper(root.right),0);
         
         int sum = root.val + leftSide + rightSide;
-        maxSum = Math.max(maxSum, sum);
+        
+        if(maxSum < sum){
+            maxSum = sum;
+        }
         
         return root.val + Math.max(leftSide,rightSide);
     }
