@@ -14,11 +14,11 @@ class Solution {
         if (root == null || target == null)
             return result;
 
-        // Step 1: Build a parent map to keep track of parent nodes
+        
         Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         buildParentMap(root, null, parentMap);
 
-        // Step 2: Perform a breadth-first search starting from the target node
+        
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(target);
 
