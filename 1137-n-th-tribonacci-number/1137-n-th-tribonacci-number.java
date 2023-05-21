@@ -1,30 +1,28 @@
 class Solution {
     public int tribonacci(int n) {
         
-        return Trib(n, new int [n+1]);
+        int result = trib(n, new int [n+1]);
+        
+        return result;
     }
     
-    public int Trib(int n, int [] qb){
+    public int trib(int n , int dp[]){
         
-        if(n==0){
-            return 0;
+        if( n==0 || n==1){
+            return n;
         }
         
-        if(n ==1 || n==2){
+        if(n == 2){
             return 1;
         }
         
-        if(qb[n]!=0){
-            return qb[n];
+        if(dp[n]> 0){
+            return dp[n];
         }
         
-        int Tribnm1 = Trib(n-1,qb);
-        int Tribnm2 = Trib(n-2,qb);
-        int Tribnm3 = Trib(n-3,qb);
-        int tribn = Tribnm1 + Tribnm2 + Tribnm3;
+        int total  = trib(n-1,dp)+ trib(n-2,dp)+ trib(n-3,dp);
+        dp[n] = total;
         
-        qb[n] = tribn;
-        
-        return tribn;
+        return total;
     }
 }
