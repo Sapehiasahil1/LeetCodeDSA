@@ -1,29 +1,28 @@
 class Solution {
     public int uniquePaths(int m, int n) {
         
-        int mat[][] = new int [m][n];
-           
-        return fun(mat, 0,0,m,n);
-       
+        int matrix[][] = new int [m][n];
+        
+       return  pathFun(0,0,matrix,m,n);
     }
     
-    public int fun(int mat[][], int i, int j,  int m, int n) {
-        
-        if(i == m-1 || j == n-1) {
-            
+    public int  pathFun(int i, int j, int matrix[][], int m, int n){
+
+       
+        if(i == m-1 || j == n-1){
             return 1;
         }
         
-        if(mat[i][j] != 0) {
-            
-        return mat[i][j];
-            
+        if(matrix[i][j] !=0){
+            return matrix[i][j];
         }
+        int right = pathFun(i,j+1,matrix,m,n);
+        int down = pathFun(i+1,j,matrix,m,n);
         
-        int paths = fun(mat, i+1, j, m, n) + fun(mat, i, j+1, m, n);    
+        int totalWays = right+down;
         
-        mat[i][j] = paths;
+        matrix[i][j] = totalWays;
         
-        return paths;
+        return totalWays;
     }
 }
