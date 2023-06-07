@@ -1,5 +1,4 @@
 class Solution {
-    
     public String reverseWords(String s) {
         
         Stack<String> st = new Stack<String>();
@@ -16,5 +15,4 @@ class Solution {
         
         return sb.toString().trim();
     }
-
 }
