@@ -16,7 +16,7 @@ class Solution {
         return count;
     }
 
-    public int helper(int [][] isConnected, int cv, boolean visited[], int count){
+    public void helper(int [][] isConnected, int cv, boolean visited[], int count){
 
 
         visited[cv] = true;
@@ -27,6 +27,6 @@ class Solution {
                 helper(isConnected, i, visited, count);
             }
         }
-        return count;
+        return ;
     }
 }
