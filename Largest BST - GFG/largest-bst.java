@@ -112,43 +112,52 @@ class GFG
 // }
 
 
-class Solution{
+class Solution {
     
     // Return the size of the largest sub-tree which is also a BST
-    static int largestBst(Node root)
-    {
+    static int maxSize = 0;
+    
+    static int largestBst(Node root) {
         // Write your code here
-        
-        ArrayList<Integer> ans = solve(root);
-        return ans.get(1);
+        maxSize = 0; // Reset maxSize before each test case
+        largestBstHelper(root);
+        return maxSize;
     }
     
-    static ArrayList<Integer> solve( Node root) {
+    static boolean largestBstHelper(Node root) {
+        if (root == null)
+            return true;
         
-        if(root == null)
-        return new ArrayList<>(Arrays.asList(1, 0, Integer.MAX_VALUE, Integer.MIN_VALUE));
+        boolean leftIsBST = largestBstHelper(root.left);
+        boolean rightIsBST = largestBstHelper(root.right);
         
-        if(root.left == null && root.right == null) 
-        return new ArrayList<>(Arrays.asList(1, 1,root.data , root.data));
-        
-        ArrayList<Integer> left = solve(root.left);
-        ArrayList<Integer> right = solve(root.right);
-        
-        if(left.get(0) == 1 && right.get(0) ==1) {
-            
-            if(root.data > left.get(3) && root.data < right.get(2)) {
-                
-                int x = left.get(2);
-                int y = right.get(3);
-                
-                if(x== Integer.MAX_VALUE) x = root.data;
-                if(y == Integer.MIN_VALUE) y = root.data;
-                
-                return new ArrayList<>(Arrays.asList(1,left.get(1)+right.get(1)+1,x,y));
+        if (leftIsBST && rightIsBST) {
+            if ((root.left == null || root.data > findMax(root.left))
+                && (root.right == null || root.data < findMin(root.right))) {
+                int subtreeSize = 1 + size(root.left) + size(root.right);
+                maxSize = Math.max(maxSize, subtreeSize);
+                return true;
             }
         }
         
-        return new ArrayList<>(Arrays.asList(0, Math.max(left.get(1),right.get(1)),0,0));
+        return false;
     }
     
+    static int size(Node node) {
+        if (node == null)
+            return 0;
+        return 1 + size(node.left) + size(node.right);
+    }
+    
+    static int findMax(Node node) {
+        while (node.right != null)
+            node = node.right;
+        return node.data;
+    }
+    
+    static int findMin(Node node) {
+        while (node.left != null)
+            node = node.left;
+        return node.data;
+    }
 }
