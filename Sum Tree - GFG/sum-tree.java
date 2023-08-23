@@ -119,28 +119,30 @@ class Solution
 	boolean isSumTree(Node root)
 	{
         // Your code here
+        
         if(root == null)
         return true;
         
-        int leftSum = sum(root.left);
-        int rightSum = sum(root.right);
+        if(root.left == null && root.right == null)
+        return true;
         
-        if(root.data == leftSum+rightSum) {
-            return isSumTree(root.left) && isSumTree(root.right);
-            
-        } else if(root.left == null && root.right == null) {
-            return isSumTree(root.left) && isSumTree(root.right);
-        } 
+        int leftSide = calSum(root.left);
+        int rightSide = calSum(root.right);
+        
+        if(leftSide + rightSide != root.data)
         return false;
+        
+        return isSumTree(root.left) && isSumTree(root.right);
 	}
 	
-	int sum (Node root) {
+	int calSum(Node root) {
+	    
 	    if(root == null)
 	    return 0;
 	    
-	    int left = sum(root.left);
-	    int right = sum(root.right);
+	    int leftSide = calSum(root.left);
+	    int rightSide = calSum(root.right);
 	    
-	    return left + right + root.data;
+	    return leftSide+rightSide+root.data;
 	}
 }
